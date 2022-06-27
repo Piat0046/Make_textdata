@@ -1,0 +1,25 @@
+
+python 'F:\News_ocr\TextRecognitionDataGenerator\trdg\run.py' --output_dir "F:\News_ocr\dataset\train\2" --font_dir "F:\News_ocr\font_dir" --language pdf_text --count 5000 --length 5 -r -b 1 -sw 1.0 -m 10,10,10,10 -f 120 -t 2 --name_format 2
+
+python 'F:\News_ocr\TextRecognitionDataGenerator\trdg\run.py' --output_dir "F:\News_ocr\dataset\val\1" --font_dir "F:\News_ocr\font_dir" --language pdf_text --count 100000 --length 5 -r -b 1 -sw 1.0 -m 10,10,10,10 -f 120 -t 2 --name_format 2
+
+python "F:\News_ocr\deep-text-recognition-benchmark\create_lmdb_dataset.py" --gtFile "F:\News_ocr\dataset\train\2\train.txt" --inputPath / --outputPath "F:\News_ocr\dataset\lmdb_train\MJ"
+
+python "F:\News_ocr\deep-text-recognition-benchmark\create_lmdb_dataset.py" --gtFile "F:\News_ocr\dataset\val\1\train.txt" --inputPath / --outputPath "F:\News_ocr\dataset\lmdb_val\MJ"
+
+!python train.py \
+--train_data "E:\cp2\New_dataset\lmdb_train" \
+--valid_data "E:\cp2\New_dataset\lmdb_val" \
+--select_data MJ \
+--batch_ratio 1 \
+--Transformation None \
+--FeatureExtraction "ResNet" \
+--SequenceModeling "BiLSTM" \
+--Prediction "CTC" \
+--input_channel 1 \
+--output_channel 256 \
+--hidden_size 256 \
+--saved_model "E:\cp2\model\best_accuracy.pth" \
+--FT \
+--workers 0 \
+--save_dir 'E:\cp2\model\savedata'
